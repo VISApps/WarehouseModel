@@ -44,4 +44,10 @@
     <string name="notenoughcustomers">Недостаточно покупателей</string>
     <string name="simulationerror">Ошибка при моделировании</string>
     <string name="failedtoloaddata">Не удалось загрузить данные</string>
+    <string name="numberofdays">Количество дней</string>
+    <string name="minrequest">Минимальный спрос</string>
+    <string name="maxrequest">Максимальный спрос</string>
+    <string name="requests">Спрос</string>
+    <string name="incnumberofdays">Введите количество дней в диапазоне от 3 до 999</string>
+    <string name="increquests">Максимальный спрос должен быть больше минимального</string>
 </resources>

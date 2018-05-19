@@ -26,6 +26,10 @@
     <string name="notdone">Not done</string>
     <string name="products">Products</string>
     <string name="orders">Orders</string>
+    <string name="requests">Requests</string>
+    <string name="numberofdays">Number of days</string>
+    <string name="minrequest">Minimum request</string>
+    <string name="maxrequest">Maximum request</string>
     <string name="percentageoffailedorders">Percentage of failed orders</string>
     <string name="percentageoffailedordersbyproducts">Percentage of failed orders by products</string>
     <string name="selectnumberofdays">Select number of days</string>
@@ -39,6 +43,8 @@
     <string name="resultdeleted">Result deleted</string>
     <string name="notenoughproducts">Not enough products</string>
     <string name="notenoughcustomers">Not enough customers</string>
+    <string name="incnumberofdays">Enter the number of days from 3 to 999</string>
+    <string name="increquests">Maximum request should be higher than the minimum</string>
     <string name="simulationerror">Simulation error</string>
     <string name="failedtoloaddata">Failed to load data</string>
     <string name="title_activity_customer">CustomerActivity</string>

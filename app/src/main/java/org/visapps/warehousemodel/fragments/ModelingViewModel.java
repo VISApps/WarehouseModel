@@ -72,12 +72,12 @@ public class ModelingViewModel extends ViewModel {
         return exceptionevents;
     }
 
-    public void startModeling(int days){
+    public void startModeling(int days, int minrequest, int maxrequest){
         progressevents.postValue(true);
         disposables.add(Single
                 .zip(loadProducts(),loadCustomers(), (products,customers) -> {
                     Modeling modeling = new Modeling();
-                    modeling.init(products,customers,days);
+                    modeling.init(products,customers,days,minrequest,maxrequest);
                     return modeling.getResult();
                 })
                 .observeOn(Schedulers.io())

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,15 @@ import org.visapps.warehousemodel.R;
 import org.visapps.warehousemodel.activities.ResultActivity;
 import org.visapps.warehousemodel.utils.FewCustomersException;
 import org.visapps.warehousemodel.utils.FewProductsException;
+import org.visapps.warehousemodel.utils.IncNumberOfDaysException;
+import org.visapps.warehousemodel.utils.IncRequestsException;
 
 import java.io.IOException;
 
 public class ModelingFragment extends Fragment {
 
     private ModelingViewModel mViewModel;
-    private NumberPicker dayspicker;
+    private TextInputEditText numberofdays,minrequest,maxrequest;
     private ProgressDialog progressDialog;
     private Button start;
 
@@ -37,10 +40,12 @@ public class ModelingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.modeling_fragment, container, false);
-        dayspicker = view.findViewById(R.id.dayspicker);
-        dayspicker.setMinValue(3);
-        dayspicker.setMaxValue(100);
-        dayspicker.setValue(3);
+        numberofdays = view.findViewById(R.id.numberofdays);
+        minrequest = view.findViewById(R.id.minrequest);
+        maxrequest = view.findViewById(R.id.maxrequest);
+        numberofdays.setText("3");
+        minrequest.setText("1");
+        maxrequest.setText("10");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -49,7 +54,7 @@ public class ModelingFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.startModeling(dayspicker.getValue());
+                startModeling();
             }
         });
         return view;
@@ -78,11 +83,22 @@ public class ModelingFragment extends Fragment {
             }
         });
         mViewModel.getExceptionEvents().observe(this, throwable -> {
-            showError(throwable);
+            handleError(throwable);
         });
     }
 
-    private void showError(Throwable throwable){
+    private void startModeling(){
+        if(numberofdays.getText().toString().equals("") || minrequest.getText().toString().equals("") || maxrequest.getText().toString().equals("")){
+            showError(getString(R.string.allfieldsarerequired));
+        }
+        else{
+            mViewModel.startModeling(Integer.valueOf(numberofdays.getText().toString()),
+                    Integer.valueOf(minrequest.getText().toString()),
+                    Integer.valueOf(maxrequest.getText().toString()));
+        }
+    }
+
+    private void handleError(Throwable throwable){
         String message = "";
         if(throwable instanceof FewProductsException){
             message = getString(R.string.notenoughproducts);
@@ -93,9 +109,19 @@ public class ModelingFragment extends Fragment {
         else if(throwable instanceof IOException){
             message = getString(R.string.failedtoloaddata);
         }
+        else if(throwable instanceof IncNumberOfDaysException){
+            message = getString(R.string.incnumberofdays);
+        }
+        else if(throwable instanceof IncRequestsException){
+            message = getString(R.string.increquests);
+        }
         else{
             message = getString(R.string.simulationerror);
         }
+        showError(message);
+    }
+
+    private void showError(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.error))
                 .setMessage(message)

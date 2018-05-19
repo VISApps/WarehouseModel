@@ -5,6 +5,8 @@ import android.util.Log;
 import org.visapps.warehousemodel.WarehouseModel;
 import org.visapps.warehousemodel.utils.FewCustomersException;
 import org.visapps.warehousemodel.utils.FewProductsException;
+import org.visapps.warehousemodel.utils.IncNumberOfDaysException;
+import org.visapps.warehousemodel.utils.IncRequestsException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ public class Modeling {
 
     private int ccount;
     private int pcount;
+    private int maxrequest;
+    private int minrequest;
 
     private int A1;
     private int[] b;
@@ -36,7 +40,7 @@ public class Modeling {
         random = new Random(System.currentTimeMillis());
     }
 
-    public void init(List<Product> products, List<Customer> customers, int G) throws Exception
+    public void init(List<Product> products, List<Customer> customers, int G, int minrequest, int maxrequest) throws Exception
     {
         if(products.size() < 3){
             throw new FewProductsException();
@@ -44,7 +48,15 @@ public class Modeling {
         if(customers.size() < 3){
             throw new FewCustomersException();
         }
+        if(G < 3){
+            throw new IncNumberOfDaysException();
+        }
+        if(minrequest >= maxrequest){
+            throw new IncRequestsException();
+        }
         this.G = G;
+        this.minrequest = minrequest;
+        this.maxrequest = maxrequest;
         pcount = products.size();
         ccount = customers.size();
         names = new ArrayList<>();
@@ -85,7 +97,10 @@ public class Modeling {
         for(int i=0; i<K.length; i++){
             items.add(new ResultItem(names.get(i),K[i]));
         }
-        return new Result(G,System.currentTimeMillis(),L, items);
+        Result result = new Result(G,System.currentTimeMillis(),L, items);
+        result.setMinrequest(minrequest);
+        result.setMaxrequest(maxrequest);
+        return result;
     }
 
 
@@ -95,7 +110,7 @@ public class Modeling {
         int[][] a = new int[ccount][pcount];
         int[] summj = new int[pcount];
         for(int i=0 ; i<ccount; i++){
-            int psize = random.nextInt(10) + 1;
+            int psize = random.nextInt(maxrequest+1) + minrequest;
             int[] p = new int[psize];
             for(int j=0; j<psize; j++){
                 p[j] = random.nextInt(pcount);

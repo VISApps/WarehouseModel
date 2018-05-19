@@ -11,6 +11,8 @@ public class Result implements Parcelable{
     private String id;
     private long days;
     private long datetime;
+    private long minrequest=-1;
+    private long maxrequest=-1;
     private double l;
     private List<ResultItem> items;
 
@@ -29,6 +31,8 @@ public class Result implements Parcelable{
         this.id = parcel.readString();
         this.days = parcel.readLong();
         this.datetime = parcel.readLong();
+        this.minrequest = parcel.readLong();
+        this.maxrequest = parcel.readLong();
         this.l = parcel.readDouble();
         this.items = new ArrayList<ResultItem>();
         this.items = parcel.readArrayList(ResultItem.class.getClassLoader());
@@ -44,6 +48,8 @@ public class Result implements Parcelable{
         dest.writeString(id);
         dest.writeLong(days);
         dest.writeLong(datetime);
+        dest.writeLong(minrequest);
+        dest.writeLong(maxrequest);
         dest.writeDouble(l);
         dest.writeList(items);
     }
@@ -100,5 +106,21 @@ public class Result implements Parcelable{
 
     public void setL(double l) {
         this.l = l;
+    }
+
+    public long getMinrequest() {
+        return minrequest;
+    }
+
+    public void setMinrequest(long minrequest) {
+        this.minrequest = minrequest;
+    }
+
+    public long getMaxrequest() {
+        return maxrequest;
+    }
+
+    public void setMaxrequest(long maxrequest) {
+        this.maxrequest = maxrequest;
     }
 }

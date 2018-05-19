@@ -6,23 +6,58 @@
     tools:context=".fragments.ModelingFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/numberofdays_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/selectnumberofdays"
-            android:layout_marginBottom="10dp"/>
-        <NumberPicker
-            android:id="@+id/dayspicker"
-            android:layout_width="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/numberofdays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/numberofdays"
+                android:singleLine="true"
+                android:maxLength="3"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/minrequest_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="16dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/minrequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/minrequest"
+                android:singleLine="true"
+                android:maxLength="3"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/maxrequest_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/maxrequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/maxrequest"
+                android:singleLine="true"
+                android:maxLength="3"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/start"

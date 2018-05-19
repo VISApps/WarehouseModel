@@ -56,7 +56,11 @@ public class ResultActivity extends AppCompatActivity {
         }
         if(result != null){
             getSupportActionBar().setTitle(convertTime(result.getDatetime()));
-            days.setText(getString(R.string.days) + ": " + String.valueOf(result.getDays()));
+            String desc = getString(R.string.days) + ": " + String.valueOf(result.getDays());
+            if(result.getMinrequest()!= -1 && result.getMaxrequest()!= -1){
+                desc = desc + " ; " + getString(R.string.requests) + ": " + String.valueOf(result.getMinrequest()) + " - " + String.valueOf(result.getMaxrequest());
+            }
+            days.setText(desc);
             initBar(result.getItems());
             initPie(result.getL());
         }
